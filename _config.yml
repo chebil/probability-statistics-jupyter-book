@@ -1,0 +1,34 @@
+# Book settings
+title: "Probability and Statistics for Computer Science"
+author: "Based on David Forsyth's textbook"
+logo: ""
+copyright: "2025"
+
+# Force re-execution of notebooks on each build
+execute:
+  execute_notebooks: force
+
+# Define the left-hand sidebar
+format:
+  html:
+    theme: cosmo
+
+# Add a bibtex file for citations
+bibtex_bibfiles:
+  - references.bib
+
+# Information about where the book will be hosted
+repository:
+  url: https://github.com/chebil/probability-statistics-jupyter-book
+  path_to_book: ""
+  branch: main
+
+# Add GitHub buttons
+html:
+  use_issues_button: true
+  use_repository_button: true
+
+# Specify the bibliography
+sphinx:
+  config:
+    bibtex_reference_style: author_year
