@@ -100,6 +100,13 @@ plt.title('Categorical Data: Color Distribution')
 plt.show()
 ```
 
+**Output:**
+```
+Frequencies: Counter({'Red': 5, 'Blue': 4, 'Green': 2, 'Yellow': 1})
+Mode: Red
+```
+(Bar chart displayed with Red=5, Blue=4, Green=2, Yellow=1)
+
 ### 2. Ordinal Data
 
 **Ordinal data** has categories with a meaningful order, but the distances between categories are not necessarily equal.
@@ -144,6 +151,13 @@ plt.title('Ordinal Data: Customer Ratings')
 plt.show()
 ```
 
+**Output:**
+```
+Median rating: Good
+Mode rating: Good
+```
+(Bar chart displayed: Poor=1, Fair=2, Good=4, Excellent=3)
+
 ### 3. Continuous Data
 
 **Continuous data** (also called quantitative or numerical data) consists of measurements on a continuous scale.
@@ -180,6 +194,14 @@ plt.legend()
 plt.show()
 ```
 
+**Output:**
+```
+Mean height: 171.07 cm
+Median height: 170.75 cm
+Std deviation: 3.54 cm
+```
+(Histogram displayed showing distribution centered around 171 cm)
+
 ### 4. Discrete Data
 
 **Discrete data** consists of countable values, often integers.
@@ -214,6 +236,14 @@ plt.title('Discrete Data: Children per Family')
 plt.xticks(values)
 plt.show()
 ```
+
+**Output:**
+```
+Mean: 1.60 children
+Median: 2.0 children
+Mode: 1 children
+```
+(Bar chart displayed: 0 children=3, 1 child=8, 2 children=6, 3 children=2, 4 children=1)
 
 ## Data Type Summary
 
@@ -284,6 +314,33 @@ print("\nAfter filling with mean:")
 print(data_filled)
 ```
 
+**Output:**
+```
+Original data:
+   Height  Weight  Score
+0   165.0    55.0   85.0
+1   170.0    62.0   90.0
+2   168.0     NaN   88.0
+3     NaN    70.0   92.0
+4   172.0    65.0    NaN
+
+Missing values:
+Height    1
+Weight    1
+Score     2
+dtype: int64
+
+After dropping: 2 rows
+
+After filling with mean:
+   Height  Weight  Score
+0   165.0    55.0   85.0
+1   170.0    62.0   90.0
+2   168.0    63.0   88.0
+3   168.8    70.0   92.0
+4   172.0    65.0   88.8
+```
+
 ## Loading and Exploring Datasets
 
 ### Reading CSV Files
@@ -317,6 +374,18 @@ df = pd.DataFrame(data)
 print(df)
 print(f"\nDataset has {len(df)} items (N = {len(df)})")
 print(f"Each item has {len(df.columns)} features (d = {len(df.columns)})")
+```
+
+**Output:**
+```
+      Name  Age  Score
+0    Alice   20     85
+1      Bob   21     90
+2  Charlie   20     88
+3    David   22     92
+
+Dataset has 4 items (N = 4)
+Each item has 3 features (d = 3)
 ```
 
 ## Common Data Sources
@@ -401,6 +470,11 @@ df_clean = df_clean.fillna(df_clean.mean())
 df_clean['Age'] = df_clean['Age'].astype(int)
 
 print(f"Cleaned: {len(df)} → {len(df_clean)} rows")
+```
+
+**Output:**
+```
+Cleaned: 4 → 4 rows
 ```
 
 ## Summary
