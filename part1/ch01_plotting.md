@@ -10,18 +10,11 @@ Bar charts are particularly useful for **categorical data**. For example, consid
 - Gender of students (Boy/Girl)
 - Goals students value (Grades/Popular/Sports)
 
-```{figure} #path-to-image
-:name: fig-bar-chart-gender
-:width: 60%
+```{figure} ../images/part1/fig-bar-charts.png
+:name: fig-bar-charts
+:width: 90%
 
-Bar chart showing the number of children of each gender. Notice that there are about the same number of boys and girls (the bars are about the same height).
-```
-
-```{figure} #path-to-image
-:name: fig-bar-chart-goals
-:width: 60%
-
-Bar chart showing the number of children selecting each of three goals. You can tell at a glance that different goals are more or less popular by looking at the height of the bars.
+Bar charts from the Chase and Danner study. Left: Number of children of each gender - notice the bars are about the same height, indicating roughly equal numbers of boys and girls. Right: Number of children selecting each of three goals - you can tell at a glance that different goals are more or less popular by looking at the height of the bars.
 ```
 
 ### Key Properties of Bar Charts
@@ -39,18 +32,11 @@ Drawing a bar chart in the obvious way—one bar per value—produces a mess of 
 
 A simple generalization of a bar chart is a **histogram**. We divide the range of the data into intervals, which do not need to be equal in length. We think of each interval as having an associated "pigeonhole," and choose one pigeonhole for each data item. We then build a set of boxes, one per interval. Each box sits on its interval on the horizontal axis, and its height is determined by the number of data items in the corresponding pigeonhole.
 
-```{figure} #path-to-image
-:name: fig-histogram-networth
-:width: 60%
+```{figure} ../images/part1/fig-histograms.png
+:name: fig-histograms
+:width: 90%
 
-Histogram of net worths. There are five bars, and the height of each bar gives the number of data items that fall into its interval. This picture suggests that net worths tend to be quite similar, and around $100,000.
-```
-
-```{figure} #path-to-image
-:name: fig-histogram-cheese
-:width: 60%
-
-Histogram of cheese goodness scores. There are six bars (0–10, 10–20, and so on), and the height of each bar gives the number of data items that fall into its interval. You can see at a glance that quite a lot of cheeses have relatively low scores, and few have high scores.
+Histograms for continuous data. Left: Net worths for 10 individuals - there are five bars, and the height of each bar gives the number of data items that fall into its interval. The picture suggests that net worths tend to be quite similar, and around $100,000. Right: Cheese goodness scores for 20 cheeses - there are six bars (0–10, 10–20, and so on). You can see at a glance that quite a lot of cheeses have relatively low scores, and few have high scores.
 ```
 
 ### Understanding Histograms
@@ -107,11 +93,11 @@ One possibility is gender. We can investigate this possibility by comparing:
 - A histogram of temperatures for males
 - A histogram of temperatures for females
 
-```{figure} #path-to-image
+```{figure} ../images/part1/fig-conditional-histograms.png
 :name: fig-conditional-histograms
 :width: 80%
 
-Top: Histogram of all body temperatures, showing clustering around one value. Bottom: Histograms for each gender separately. It looks as though one gender runs slightly cooler than the other.
+Conditional histograms for body temperature data. Top: Histogram of all body temperatures, showing clustering around one value (marked with red dashed line at 98.4°F). Middle and Bottom: Histograms for each gender separately. It looks as though one gender runs slightly cooler than the other, suggesting that gender may influence body temperature.
 ```
 
 Histograms that plot only part of a dataset are sometimes called **conditional histograms** or **class-conditional histograms**, because each histogram is conditioned on something. In this case, each histogram uses only data that comes from a particular gender.
