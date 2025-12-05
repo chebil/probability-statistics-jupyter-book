@@ -2,6 +2,14 @@
 
 Welcome to this Jupyter Book companion for **"Probability and Statistics for Computer Science"** by David Forsyth.
 
+## Introduction Video
+
+Watch this overview of probability and statistics for computer science:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0kJrFgxxq-I" title="Statistics and Probability for Computer Scientists" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Watch on YouTube](https://youtu.be/0kJrFgxxq-I)
+
 ## About This Book
 
 This interactive Jupyter Book provides a comprehensive guide to probability and statistics tailored specifically for computer science students. The material emphasizes practical applications, computational approaches, and hands-on examples.
