@@ -61,7 +61,7 @@ ISBN: 978-3-319-64410-3
 ## Repository
 
 The source code for this book is available at:
-[https://github.com/chebil/probability-statistics-jupyter-book](https://github.com/chebil/probability-statistics-jupyter-book)
+[https://github.com/chebil/stat](https://github.com/chebil/stat)
 
 ---
 
