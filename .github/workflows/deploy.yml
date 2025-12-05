@@ -9,13 +9,11 @@ on:
       - main
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -35,42 +33,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install jupyter-book
           pip install -r requirements.txt
-
-      - name: Debug - List all files
-        run: |
-          echo "=== Current directory ==="
-          pwd
-          echo "=== All files (including hidden) ==="
-          ls -laR
-          echo "=== Config file ==="
-          cat _config.yml
-          echo "=== TOC file ==="
-          cat _toc.yml
-
-      - name: Debug - Test jupyter-book command
-        run: |
-          echo "Testing jupyter-book version..."
-          jupyter-book --version
-          echo "Testing config..."
-          jupyter-book config sphinx .
 
       - name: Build the book
         run: |
-          echo "Building Jupyter Book..."
-          cd "${GITHUB_WORKSPACE}"
           jupyter-book build .
-
-      - name: Check build output
-        run: |
-          if [ ! -d "_build/html" ]; then
-            echo "ERROR: Build output directory _build/html does not exist."
-            echo "Build may have failed. Check the jupyter-book build output above."
-            exit 1
-          fi
-          echo "SUCCESS: _build/html directory exists"
-          ls -la _build/html/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
