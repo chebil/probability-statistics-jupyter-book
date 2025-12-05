@@ -6,7 +6,7 @@ copyright: "2025"
 
 # Force re-execution of notebooks on each build
 execute:
-  execute_notebooks: force
+  execute_notebooks: 'off'  # Changed to 'off' to speed up builds
 
 # Define the left-hand sidebar
 format:
@@ -23,12 +23,18 @@ repository:
   path_to_book: ""
   branch: main
 
-# Add GitHub buttons
+# Configure the base URL for GitHub Pages
 html:
   use_issues_button: true
   use_repository_button: true
+  baseurl: /stat/  # This sets the base URL to chebil.github.io/stat
 
 # Specify the bibliography
 sphinx:
   config:
     bibtex_reference_style: author_year
+    html_baseurl: 'https://chebil.github.io/stat/'
+    html_theme_options:
+      repository_url: https://github.com/chebil/probability-statistics-jupyter-book
+      use_repository_button: true
+      use_issues_button: true
