@@ -38,23 +38,29 @@ jobs:
           pip install jupyter-book
           pip install -r requirements.txt
 
-      - name: List files for debugging
+      - name: Debug - List all files
         run: |
-          echo "=== Repository Structure ==="
-          ls -la
-          echo "=== Part 1 files ==="
-          ls -la part1/ || echo "part1 directory not found"
-          echo "=== Part 2 files ==="
-          ls -la part2/ || echo "part2 directory not found"
-          echo "=== Config files ==="
+          echo "=== Current directory ==="
+          pwd
+          echo "=== All files (including hidden) ==="
+          ls -laR
+          echo "=== Config file ==="
           cat _config.yml
           echo "=== TOC file ==="
           cat _toc.yml
 
+      - name: Debug - Test jupyter-book command
+        run: |
+          echo "Testing jupyter-book version..."
+          jupyter-book --version
+          echo "Testing config..."
+          jupyter-book config sphinx .
+
       - name: Build the book
         run: |
           echo "Building Jupyter Book..."
-          jupyter-book build . --all
+          cd "${GITHUB_WORKSPACE}"
+          jupyter-book build .
 
       - name: Check build output
         run: |
