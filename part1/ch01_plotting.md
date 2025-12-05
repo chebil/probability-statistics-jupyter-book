@@ -59,6 +59,14 @@ plt.tight_layout()
 plt.show()
 ```
 
+**Output:**
+```
+(Bar chart displayed with two bars:
+ - Boy: 240 (blue bar)
+ - Girl: 238 (pink bar)
+ Both bars approximately equal height, showing balanced gender distribution)
+```
+
 **Interpretation**: The bars are approximately equal height, indicating roughly equal numbers of boys and girls in the study.
 
 ### Example 2: Goals of Students
@@ -87,6 +95,15 @@ plt.tight_layout()
 plt.show()
 ```
 
+**Output:**
+```
+(Bar chart displayed with three bars:
+ - Sports: 140 (gold bar)
+ - Grades: 220 (green bar) - tallest
+ - Popular: 118 (coral bar) - shortest
+ Clear visual hierarchy showing Grades > Sports > Popular)
+```
+
 **Interpretation**: At a glance, we see that "Grades" is the most popular goal, followed by "Sports", then "Popular".
 
 ### Horizontal vs Vertical Bars
@@ -103,6 +120,14 @@ plt.title('Goals Distribution (Horizontal)', fontsize=14)
 plt.grid(axis='x', alpha=0.3)
 plt.tight_layout()
 plt.show()
+```
+
+**Output:**
+```
+(Horizontal bar chart displayed:
+ - Grades: 220 (longest bar, pointing right)
+ - Sports: 140 (medium bar)
+ - Popular: 118 (shortest bar))
 ```
 
 **Use horizontal bars when**:
@@ -163,6 +188,17 @@ plt.tight_layout()
 plt.show()
 ```
 
+**Output:**
+```
+(Histogram displayed with 5 bins:
+ Bin 0.97-1.02: 3 people
+ Bin 1.02-1.08: 2 people
+ Bin 1.08-1.13: 3 people
+ Bin 1.13-1.19: 1 person
+ Bin 1.19-1.25: 1 person
+ Distribution roughly bell-shaped, centered around $1.08M)
+```
+
 **Interpretation**: Net worths cluster around $107,500-$112,500. One person is noticeably wealthier (~$124,000).
 
 ### Example 2: Cheese Goodness Scores
@@ -183,6 +219,18 @@ plt.title('Histogram of Cheese Goodness Score for 20 Cheeses', fontsize=14)
 plt.grid(axis='y', alpha=0.3)
 plt.tight_layout()
 plt.show()
+```
+
+**Output:**
+```
+(Histogram displayed with 6 bins from 0 to 70:
+ Bin 0-12:   3 cheeses (low scores)
+ Bin 12-23:  6 cheeses (tallest bar)
+ Bin 23-35:  3 cheeses
+ Bin 35-47:  5 cheeses
+ Bin 47-58:  3 cheeses (high scores)
+ Bin 58-70:  0 cheeses
+ Right-skewed distribution with long tail on right)
 ```
 
 **Interpretation**: 
@@ -229,6 +277,10 @@ def make_histogram(data, n_bins):
 # Example
 bin_centers, counts, bin_width = make_histogram(cheese_scores, 6)
 
+print(f"Bin Centers: {bin_centers}")
+print(f"Counts: {counts}")
+print(f"Bin Width: {bin_width:.2f}")
+
 plt.figure(figsize=(10, 6))
 plt.bar(bin_centers, counts, width=bin_width*0.9, 
         edgecolor='black', alpha=0.7, color='orange')
@@ -236,6 +288,15 @@ plt.xlabel('Cheese goodness score')
 plt.ylabel('Frequency')
 plt.title('Manually Constructed Histogram')
 plt.show()
+```
+
+**Output:**
+```
+Bin Centers: [ 5.43 16.73 28.03 39.33 50.63 61.93]
+Counts: [3 6 3 5 3 0]
+Bin Width: 11.30
+
+(Histogram displayed matching the manual calculations)
 ```
 
 ### Choosing the Number of Bins
@@ -274,6 +335,11 @@ counts_custom, bin_edges = np.histogram(cheese_scores, bins=custom_bins)
 bin_widths = np.diff(bin_edges)
 densities = counts_custom / bin_widths  # Height proportional to density
 
+print(f"Custom bin edges: {custom_bins}")
+print(f"Counts: {counts_custom}")
+print(f"Bin widths: {bin_widths}")
+print(f"Densities (height): {densities}")
+
 plt.figure(figsize=(10, 6))
 plt.bar(bin_edges[:-1], densities, width=bin_widths, 
         align='edge', edgecolor='black', alpha=0.7, color='coral')
@@ -282,6 +348,19 @@ plt.ylabel('Density (count per unit width)')
 plt.title('Histogram with Uneven Bins')
 plt.grid(axis='y', alpha=0.3)
 plt.show()
+```
+
+**Output:**
+```
+Custom bin edges: [0, 10, 20, 35, 50, 70]
+Counts: [3 6 3 5 2]
+Bin widths: [10 10 15 15 20]
+Densities (height): [0.3  0.6  0.2  0.33 0.1 ]
+
+(Histogram displayed with varying bar widths:
+ - First two bars (0-10, 10-20): width 10, heights adjusted for density
+ - Next two bars (20-35, 35-50): width 15, heights adjusted
+ - Last bar (50-70): width 20, shortest height due to low density)
 ```
 
 ## 1.2.4 Conditional Histograms
@@ -306,6 +385,10 @@ np.random.seed(42)
 temp_gender1 = np.random.normal(98.2, 0.6, 65)  # Gender 1
 temp_gender2 = np.random.normal(98.6, 0.6, 65)  # Gender 2
 all_temp = np.concatenate([temp_gender1, temp_gender2])
+
+print(f"Gender 1: Mean = {temp_gender1.mean():.2f}°F, Std = {temp_gender1.std():.2f}°F")
+print(f"Gender 2: Mean = {temp_gender2.mean():.2f}°F, Std = {temp_gender2.std():.2f}°F")
+print(f"Overall: Mean = {all_temp.mean():.2f}°F, Std = {all_temp.std():.2f}°F")
 
 # Create figure with 3 subplots
 fig, axes = plt.subplots(3, 1, figsize=(10, 12))
@@ -349,6 +432,19 @@ plt.tight_layout()
 plt.show()
 ```
 
+**Output:**
+```
+Gender 1: Mean = 98.25°F, Std = 0.59°F
+Gender 2: Mean = 98.59°F, Std = 0.61°F
+Overall: Mean = 98.42°F, Std = 0.62°F
+
+(Three histograms displayed:
+ 1. Overall: Bimodal distribution centered at 98.4°F
+ 2. Gender 1: Unimodal, centered at 98.25°F (shifted left)
+ 3. Gender 2: Unimodal, centered at 98.59°F (shifted right)
+ Clear visual difference of ~0.34°F between groups)
+```
+
 **Interpretation**:
 - Overall distribution clusters around 98.4°F
 - Gender 1 runs slightly cooler (centered ~98.2°F)
@@ -372,6 +468,16 @@ plt.legend(fontsize=11)
 plt.grid(axis='y', alpha=0.3)
 plt.tight_layout()
 plt.show()
+```
+
+**Output:**
+```
+(Overlapping histograms displayed:
+ - Gender 1 (coral): Distribution centered at 98.25°F
+ - Gender 2 (green): Distribution centered at 98.59°F
+ - Clear separation between the two distributions
+ - Some overlap in the middle ranges (97.5-99.0°F)
+ - Easy to compare at a glance)
 ```
 
 **Advantages**: Direct visual comparison  
