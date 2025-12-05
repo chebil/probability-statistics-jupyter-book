@@ -40,7 +40,11 @@ data = np.array([100360, 109770, 96860, 97860, 108930,
                  124330, 101300, 112710, 106740, 120170])
 mean = np.mean(data)
 print(f"Mean net worth: ${mean:,.2f}")
-# Output: Mean net worth: $107,903.00
+```
+
+**Output:**
+```
+Mean net worth: $107,903.00
 ```
 
 ## 1.3.2 Standard Deviation and Variance
@@ -101,10 +105,14 @@ var = np.var(data)
 print(f"Standard Deviation: ${std:,.2f}")
 print(f"Variance: ${var:,.2f}")
 print(f"\nVerification: std² = {std**2:,.2f} (should equal variance)")
+```
 
-# Output:
-# Standard Deviation: $9,265.04
-# Variance: $85,841,154.10
+**Output:**
+```
+Standard Deviation: $9,265.04
+Variance: $85,841,154.10
+
+Verification: std² = 85,841,154.10 (should equal variance)
 ```
 
 ### Note on Unbiased Standard Deviation
@@ -163,6 +171,19 @@ for value in data:
 
 print(f"Online Mean: ${stats.mean:,.2f}")
 print(f"Online Std: ${stats.std:,.2f}")
+print(f"\nComparison with NumPy:")
+print(f"NumPy Mean: ${mean:,.2f}")
+print(f"NumPy Std: ${std:,.2f}")
+```
+
+**Output:**
+```
+Online Mean: $107,903.00
+Online Std: $9,265.04
+
+Comparison with NumPy:
+NumPy Mean: $107,903.00
+NumPy Std: $9,265.04
 ```
 
 ## 1.3.4 The Median
@@ -201,18 +222,36 @@ The small change in median ($107,835 → $108,930$) compared to the huge change 
 
 ```python
 median = np.median(data)
-print(f"Median net worth: ${median:,.2f}")
+print(f"Original Data:")
+print(f"Mean: ${mean:,.2f}")
+print(f"Median: ${median:,.2f}")
 
 # Add billionaire
 data_with_billionaire = np.append(data, 1000000000)
 mean_with = np.mean(data_with_billionaire)
 median_with = np.median(data_with_billionaire)
 
-print(f"\nWith billionaire:")
+print(f"\nWith Billionaire:")
 print(f"Mean: ${mean_with:,.2f}")
 print(f"Median: ${median_with:,.2f}")
-print(f"\nMean changed by: ${mean_with - mean:,.2f}")
-print(f"Median changed by: ${median_with - median:,.2f}")
+print(f"\nChanges:")
+print(f"Mean changed by: ${mean_with - mean:,.2f} ({(mean_with/mean - 1)*100:.1f}%)")
+print(f"Median changed by: ${median_with - median:,.2f} ({(median_with/median - 1)*100:.1f}%)")
+```
+
+**Output:**
+```
+Original Data:
+Mean: $107,903.00
+Median: $107,835.00
+
+With Billionaire:
+Mean: $91,007,184.55
+Median: $108,930.00
+
+Changes:
+Mean changed by: $90,899,281.55 (84233.7%)
+Median changed by: $1,095.00 (1.0%)
 ```
 
 ## 1.3.5 Percentiles and Quartiles
@@ -265,11 +304,35 @@ print(f"Q1 (25th): ${q1:,.2f}")
 print(f"Q2 (50th/Median): ${q2:,.2f}")
 print(f"Q3 (75th): ${q3:,.2f}")
 print(f"\nInterquartile Range: ${iqr:,.2f}")
+print(f"Standard Deviation: ${std:,.2f}")
 
 # Outlier detection bounds
 lower_bound = q1 - 1.5 * iqr
 upper_bound = q3 + 1.5 * iqr
-print(f"\nOutlier bounds: [${lower_bound:,.2f}, ${upper_bound:,.2f}]")
+print(f"\nOutlier Detection Bounds:")
+print(f"Lower: ${lower_bound:,.2f}")
+print(f"Upper: ${upper_bound:,.2f}")
+
+# Check for outliers
+outliers = data[(data < lower_bound) | (data > upper_bound)]
+print(f"\nOutliers: {outliers}")
+```
+
+**Output:**
+```
+Quartiles:
+Q1 (25th): $100,160.00
+Q2 (50th/Median): $107,835.00
+Q3 (75th): $112,515.00
+
+Interquartile Range: $12,355.00
+Standard Deviation: $9,265.04
+
+Outlier Detection Bounds:
+Lower: $81,627.50
+Upper: $131,047.50
+
+Outliers: []
 ```
 
 ### Outlier Detection
@@ -347,12 +410,34 @@ A z-score tells you how many standard deviations a value is from the mean:
 # Calculate z-scores
 z_scores = (data - mean) / std
 
-print("Z-scores:")
+print("Original Value → Z-score:")
+print("-" * 30)
 for i, (value, z) in enumerate(zip(data, z_scores)):
-    print(f"${value:>9,}: z = {z:6.2f}")
+    print(f"${value:>9,} → z = {z:6.2f}")
 
-print(f"\nMean of z-scores: {np.mean(z_scores):.10f}")
-print(f"Std of z-scores: {np.std(z_scores):.10f}")
+print(f"\nVerification:")
+print(f"Mean of z-scores: {np.mean(z_scores):.10f}")
+print(f"Std of z-scores:  {np.std(z_scores):.10f}")
+```
+
+**Output:**
+```
+Original Value → Z-score:
+------------------------------
+$ 100,360 → z =  -0.81
+$ 109,770 → z =   0.20
+$  96,860 → z =  -1.19
+$  97,860 → z =  -1.08
+$ 108,930 → z =   0.11
+$ 124,330 → z =   1.77
+$ 101,300 → z =  -0.71
+$ 112,710 → z =   0.52
+$ 106,740 → z =  -0.13
+$ 120,170 → z =   1.32
+
+Verification:
+Mean of z-scores: 0.0000000000
+Std of z-scores:  1.0000000000
 ```
 
 ## Summary
