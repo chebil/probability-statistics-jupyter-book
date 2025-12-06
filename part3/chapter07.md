@@ -1,39 +1,39 @@
 # Chapter 7: The Significance of Evidence
 
-Statistical significance is one of the most powerful and widely used tools in data analysis. While it might seem mysterious at first, the underlying concept is straightforward: we want to know whether observed differences in data are meaningful or could have occurred by chance.
+This chapter introduces **hypothesis testing** - a formal framework for making decisions based on data. We learn how to evaluate whether observed patterns are likely due to chance or represent real effects.
 
-## Chapter Overview
+## Learning Objectives
 
-This chapter introduces hypothesis testing and statistical significance, covering:
+After completing this chapter, you will be able to:
 
-- **Section 7.1: Significance** - Understanding null hypotheses, alternative hypotheses, and p-values
-- **Section 7.2: Comparing Population Means** - Tests for comparing means of two populations
-- **Section 7.3: Other Useful Tests** - F-tests for variances and χ² tests for model fit
-- **Section 7.4: P-Value Hacking** - Dangers and ethical considerations in significance testing
+- Formulate null and alternative hypotheses
+- Understand and compute p-values
+- Conduct t-tests for comparing means
+- Apply F-tests for comparing variances
+- Use chi-square tests for categorical data
+- Interpret statistical significance correctly
+- Avoid common pitfalls (p-hacking, multiple testing)
 
-## The Big Idea
+## Chapter Outline
 
-When we observe data, we want to know: *Could this have happened by random chance, or is something interesting going on?*
+1. **Significance and P-Values** - The foundation of hypothesis testing
+2. **Comparing Means** - t-tests for one and two samples
+3. **Other Important Tests** - F-tests and chi-square tests
+4. **Dangers and Pitfalls** - What can go wrong
 
-For example:
-- Is a new drug actually effective, or did patients just get better naturally?
-- Do two groups really differ, or is the difference just random variation?
-- Does a coin really favor heads, or did we just get lucky?
+## Why This Matters
 
-Statistical significance gives us a principled way to answer these questions.
+Hypothesis testing is fundamental to:
+- **Scientific Research**: Validating experimental findings
+- **A/B Testing**: Making data-driven product decisions
+- **Quality Control**: Detecting process changes
+- **Medicine**: Evaluating treatment effectiveness
+- **Machine Learning**: Comparing model performance
 
-## Prerequisites
+## The Big Question
 
-To understand this chapter, you should be familiar with:
-- Sampling and confidence intervals (Chapter 6)
-- Normal and t-distributions (Chapter 5)
-- Expected values and variance (Chapter 4)
+> "Could this result have happened by chance?"
 
-## Looking Ahead
+Hypothesis testing provides a rigorous framework for answering this question.
 
-The techniques in this chapter form the foundation for:
-- Experimental design and ANOVA (Chapter 8)
-- Model fitting and validation
-- Making data-driven decisions with confidence
-
-Let's begin by understanding what we mean by "significance."
+Let's begin!

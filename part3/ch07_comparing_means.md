@@ -1,207 +1,55 @@
-# 7.2 Comparing the Mean of Two Populations
+# 7.2 Comparing Means: t-Tests
 
-A common statistical question is whether two populations have the same mean. For example:
-- Does a new teaching method improve test scores compared to the traditional method?
-- Do men and women have different average salaries in a company?
-- Is a new drug more effective than a placebo?
+This section covers tests for comparing the means of two populations - one of the most common statistical procedures.
 
-We answer these questions by collecting samples from each population and using hypothesis tests.
+## The Two-Sample Problem
 
-## General Setup
+### Setup
 
 We have:
-- **Population 1**: mean $\mu_1$, standard deviation $\sigma_1$
-- **Population 2**: mean $\mu_2$, standard deviation $\sigma_2$
-- **Sample 1**: size $N_1$, mean $\bar{x}_1$, standard deviation $s_1$
-- **Sample 2**: size $N_2$, mean $\bar{x}_2$, standard deviation $s_2$
+- **Group 1**: n₁ observations with mean x̄₁ and std s₁  
+- **Group 2**: n₂ observations with mean x̄₂ and std s₂
 
-**Null hypothesis**: $H_0: \mu_1 = \mu_2$ (or equivalently, $\mu_1 - \mu_2 = 0$)
+### Question
 
-**Alternative hypothesis** (two-sided): $H_1: \mu_1 \neq \mu_2$
+Do these groups have different population means?
 
-Or for one-sided tests:
-- $H_1: \mu_1 > \mu_2$ (population 1 has larger mean)
-- $H_1: \mu_1 < \mu_2$ (population 1 has smaller mean)
+### Hypotheses
 
-The approach we use depends on what we know about the population standard deviations.
+- **H₀**: μ₁ = μ₂ (no difference)
+- **H₁**: μ₁ ≠ μ₂ (two-tailed) OR μ₁ > μ₂ OR μ₁ < μ₂ (one-tailed)
 
-## 7.2.1 Assuming Known Population Standard Deviations
+## Case 1: Known Population Variances (Rare)
 
-This case is primarily theoretical—in practice, we rarely know the true population standard deviations. However, it's useful for understanding the logic.
+If we somehow know σ₁² and σ₂², use the **Z-test**:
 
-### When to Use
-- We know both $\sigma_1$ and $\sigma_2$ (rare in practice)
-- OR both sample sizes are very large ($N_1, N_2 \geq 30$), so $s_1 \approx \sigma_1$ and $s_2 \approx \sigma_2$
+\[
+z = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0, 1)
+\]
 
-### Test Statistic (Z-Test)
+under H₀: μ₁ = μ₂.
 
-Under the null hypothesis, $\bar{x}_1 - \bar{x}_2$ is approximately normally distributed with:
-- Mean: $\mu_1 - \mu_2 = 0$ (under $H_0$)
-- Standard error: $\sqrt{\frac{\sigma_1^2}{N_1} + \frac{\sigma_2^2}{N_2}}$
+## Case 2: Equal Unknown Variances (Pooled t-Test)
 
-The test statistic is:
+### Assumption
 
-$$z = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{\sigma_1^2}{N_1} + \frac{\sigma_2^2}{N_2}}}$$
+σ₁² = σ₂² = σ² (common variance, but unknown)
 
-Under $H_0$, this follows a standard normal distribution $N(0,1)$.
+### Pooled Variance Estimator
 
-### Decision Rule
+\[
+s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}
+\]
 
-For significance level $\alpha$:
+This combines information from both samples.
 
-**Two-sided test**:
-- Reject $H_0$ if $|z| > z_{\alpha/2}$ (e.g., $|z| > 1.96$ for $\alpha = 0.05$)
-- Or equivalently, reject if p-value $< \alpha$, where p-value $= 2 \times P(Z > |z|)$
+### Test Statistic
 
-**One-sided test** ($H_1: \mu_1 > \mu_2$):
-- Reject $H_0$ if $z > z_\alpha$ (e.g., $z > 1.645$ for $\alpha = 0.05$)
-- Or equivalently, reject if p-value $< \alpha$, where p-value $= P(Z > z)$
+\[
+t = \frac{\bar{x}_1 - \bar{x}_2}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t_{n_1+n_2-2}
+\]
 
-```{admonition} Example: Comparing Exam Scores
-Two classes take the same exam:
-- **Class A**: $N_1 = 50$, $\bar{x}_1 = 75$, $\sigma_1 = 10$ (known from past data)
-- **Class B**: $N_2 = 45$, $\bar{x}_2 = 72$, $\sigma_2 = 12$ (known from past data)
-
-Test if class means differ at $\alpha = 0.05$.
-
-$$z = \frac{75 - 72}{\sqrt{\frac{10^2}{50} + \frac{12^2}{45}}} = \frac{3}{\sqrt{2 + 3.2}} = \frac{3}{2.28} \approx 1.32$$
-
-For two-sided test, critical values are $\pm 1.96$. Since $|z| = 1.32 < 1.96$, we fail to reject $H_0$.
-
-P-value $= 2 \times P(Z > 1.32) \approx 2 \times 0.093 = 0.186$
-
-**Conclusion**: At $\alpha = 0.05$, there is insufficient evidence that class means differ.
-```
-
-## 7.2.2 Assuming Same, Unknown Population Standard Deviation
-
-Often we don't know $\sigma_1$ or $\sigma_2$, but we believe they are equal: $\sigma_1 = \sigma_2 = \sigma$ (common variance).
-
-### When to Use
-- Both $\sigma_1$ and $\sigma_2$ are unknown
-- We believe $\sigma_1 = \sigma_2$ (can test this with F-test, see Section 7.3.1)
-- This is called the "pooled variance" or "equal variance" t-test
-
-### Pooled Variance Estimate
-
-We combine both samples to estimate the common variance:
-
-$$s_p^2 = \frac{(N_1 - 1)s_1^2 + (N_2 - 1)s_2^2}{N_1 + N_2 - 2}$$
-
-This is a weighted average of the two sample variances.
-
-### Test Statistic (Pooled T-Test)
-
-$$t = \frac{\bar{x}_1 - \bar{x}_2}{s_p \sqrt{\frac{1}{N_1} + \frac{1}{N_2}}}$$
-
-Under $H_0$, this follows a t-distribution with degrees of freedom:
-
-$$df = N_1 + N_2 - 2$$
-
-### Decision Rule
-
-For significance level $\alpha$:
-
-**Two-sided test**:
-- Reject $H_0$ if $|t| > t_{\alpha/2, df}$
-- Or equivalently, reject if p-value $< \alpha$
-
-```{admonition} Example: Comparing Two Drugs
-Compare recovery times for two drugs:
-- **Drug A**: $N_1 = 12$, $\bar{x}_1 = 8.5$ days, $s_1 = 2.1$ days
-- **Drug B**: $N_2 = 15$, $\bar{x}_2 = 9.8$ days, $s_2 = 2.3$ days
-
-Assume equal population variances. Test at $\alpha = 0.05$.
-
-**Step 1**: Pooled variance
-$$s_p^2 = \frac{11 \times (2.1)^2 + 14 \times (2.3)^2}{12 + 15 - 2} = \frac{48.51 + 74.06}{25} = \frac{122.57}{25} = 4.90$$
-$$s_p = \sqrt{4.90} \approx 2.21$$
-
-**Step 2**: Test statistic
-$$t = \frac{8.5 - 9.8}{2.21 \sqrt{\frac{1}{12} + \frac{1}{15}}} = \frac{-1.3}{2.21 \times 0.387} = \frac{-1.3}{0.855} \approx -1.52$$
-
-**Step 3**: Critical value and decision
-With $df = 25$ and $\alpha = 0.05$ (two-sided), $t_{0.025, 25} \approx 2.060$
-
-Since $|t| = 1.52 < 2.060$, we fail to reject $H_0$.
-
-P-value $\approx 0.14$
-
-**Conclusion**: At $\alpha = 0.05$, there is insufficient evidence that recovery times differ between the two drugs.
-```
-
-## 7.2.3 Assuming Different, Unknown Population Standard Deviation
-
-This is the most general case: we don't know $\sigma_1$ or $\sigma_2$, and we don't assume they're equal.
-
-### When to Use
-- Both $\sigma_1$ and $\sigma_2$ are unknown
-- We DON'T believe $\sigma_1 = \sigma_2$ (unequal variances)
-- This is called "Welch's t-test" or "unequal variance t-test"
-
-### Test Statistic (Welch's T-Test)
-
-$$t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{N_1} + \frac{s_2^2}{N_2}}}$$
-
-This follows approximately a t-distribution with **Welch-Satterthwaite degrees of freedom**:
-
-$$df = \frac{\left(\frac{s_1^2}{N_1} + \frac{s_2^2}{N_2}\right)^2}{\frac{(s_1^2/N_1)^2}{N_1-1} + \frac{(s_2^2/N_2)^2}{N_2-1}}$$
-
-This formula looks complicated but is straightforward to compute. The df is typically non-integer and is usually rounded down.
-
-### Decision Rule
-
-Same as pooled t-test, but using Welch's df:
-- Reject $H_0$ if $|t| > t_{\alpha/2, df}$ (two-sided)
-- Or equivalently, reject if p-value $< \alpha$
-
-```{admonition} Example: Website Conversion Rates
-Compare time spent on two website designs:
-- **Design A**: $N_1 = 50$, $\bar{x}_1 = 45$ seconds, $s_1 = 12$ seconds
-- **Design B**: $N_2 = 60$, $\bar{x}_2 = 52$ seconds, $s_2 = 20$ seconds
-
-Variances look quite different, so use Welch's t-test at $\alpha = 0.05$.
-
-**Step 1**: Test statistic
-$$t = \frac{45 - 52}{\sqrt{\frac{144}{50} + \frac{400}{60}}} = \frac{-7}{\sqrt{2.88 + 6.67}} = \frac{-7}{\sqrt{9.55}} = \frac{-7}{3.09} \approx -2.27$$
-
-**Step 2**: Degrees of freedom
-$$df = \frac{(2.88 + 6.67)^2}{\frac{(2.88)^2}{49} + \frac{(6.67)^2}{59}} = \frac{90.60}{0.169 + 0.754} = \frac{90.60}{0.923} \approx 98.2$$
-
-Round down to $df = 98$.
-
-**Step 3**: Critical value and decision
-With $df = 98$ and $\alpha = 0.05$ (two-sided), $t_{0.025, 98} \approx 1.98$
-
-Since $|t| = 2.27 > 1.98$, we reject $H_0$.
-
-P-value $\approx 0.025$
-
-**Conclusion**: At $\alpha = 0.05$, there is significant evidence that average time spent differs between designs. Design B has significantly higher average time.
-```
-
-## Which Test Should You Use?
-
-```{mermaid}
-graph TD
-    A[Do you know σ₁ and σ₂?] -->|Yes| B[Z-test Section 7.2.1]
-    A -->|No| C[Are sample sizes large N₁,N₂ ≥ 30?]
-    C -->|Yes| B
-    C -->|No| D[Do you believe σ₁ = σ₂?]
-    D -->|Yes| E[Pooled t-test Section 7.2.2]
-    D -->|No or Unsure| F[Welch's t-test Section 7.2.3]
-    D -->|Need to test| G[F-test Section 7.3.1 then decide]
-```
-
-**General recommendations**:
-1. If population standard deviations are known (rare): use z-test
-2. If samples are large (N ≥ 30): can use z-test with sample standard deviations
-3. If samples are small:
-   - Test for equal variances first (F-test)
-   - If variances appear equal: pooled t-test
-   - If variances differ or you're unsure: Welch's t-test (safer default)
-
-## Python Example: All Three Tests
+### Python Example
 
 ```python
 import numpy as np
@@ -210,142 +58,411 @@ import matplotlib.pyplot as plt
 
 np.random.seed(42)
 
-# Generate two samples
-sample1 = np.random.normal(100, 15, size=30)  # mean=100, std=15
-sample2 = np.random.normal(110, 15, size=35)  # mean=110, std=15
+# Two groups: Control vs Treatment
+control = np.array([23, 25, 22, 28, 26, 24, 27, 25, 23, 26])
+treatment = np.array([30, 32, 28, 31, 29, 33, 30, 32, 31, 30])
 
-n1, n2 = len(sample1), len(sample2)
-mean1, mean2 = np.mean(sample1), np.mean(sample2)
-std1, std2 = np.std(sample1, ddof=1), np.std(sample2, ddof=1)
+n1 = len(control)
+n2 = len(treatment)
+mean1 = np.mean(control)
+mean2 = np.mean(treatment)
+std1 = np.std(control, ddof=1)
+std2 = np.std(treatment, ddof=1)
 
-print("Sample 1: n={}, mean={:.2f}, std={:.2f}".format(n1, mean1, std1))
-print("Sample 2: n={}, mean={:.2f}, std={:.2f}".format(n2, mean2, std2))
+print("Two-Sample t-Test (Equal Variances Assumed)")
+print("="*60)
+print(f"Control:   n={n1}, mean={mean1:.2f}, std={std1:.2f}")
+print(f"Treatment: n={n2}, mean={mean2:.2f}, std={std2:.2f}")
+print()
+print(f"H₀: μ_control = μ_treatment")
+print(f"H₁: μ_control ≠ μ_treatment")
 print()
 
-# 1. Z-test (assuming we know population std = 15)
-print("=" * 50)
-print("1. Z-TEST (assuming known σ₁=σ₂=15)")
-print("=" * 50)
-sigma1, sigma2 = 15, 15
-se_z = np.sqrt(sigma1**2/n1 + sigma2**2/n2)
-z_stat = (mean1 - mean2) / se_z
-p_value_z = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+# Pooled variance
+sp2 = ((n1-1)*std1**2 + (n2-1)*std2**2) / (n1 + n2 - 2)
+sp = np.sqrt(sp2)
 
-print(f"Z-statistic: {z_stat:.3f}")
-print(f"P-value: {p_value_z:.4f}")
-print(f"Critical values (α=0.05): ±1.96")
-if p_value_z < 0.05:
-    print("Reject H₀: Means are significantly different")
+print(f"Pooled standard deviation: {sp:.3f}")
+
+# Test statistic
+se_diff = sp * np.sqrt(1/n1 + 1/n2)
+t_stat = (mean1 - mean2) / se_diff
+df = n1 + n2 - 2
+
+print(f"Standard error of difference: {se_diff:.3f}")
+print(f"t-statistic: {t_stat:.3f}")
+print(f"Degrees of freedom: {df}")
+
+# P-value (two-tailed)
+p_value = 2 * stats.t.cdf(t_stat, df)  # t_stat is negative
+
+print(f"P-value: {p_value:.6f}")
+print()
+
+# Decision
+alpha = 0.05
+if p_value < alpha:
+    print(f"Decision: Reject H₀ (p = {p_value:.4f} < {alpha})")
+    print(f"Conclusion: Treatment mean is significantly different from control.")
+    print(f"Treatment appears to increase the outcome by {mean2-mean1:.1f} units.")
 else:
-    print("Fail to reject H₀: Insufficient evidence of difference")
-print()
+    print(f"Decision: Fail to reject H₀ (p = {p_value:.4f} ≥ {alpha})")
+    print(f"Conclusion: No significant difference detected.")
 
-# 2. Pooled t-test (assuming equal variances)
-print("=" * 50)
-print("2. POOLED T-TEST (assuming σ₁=σ₂)")
-print("=" * 50)
-t_stat_pooled, p_value_pooled = stats.ttest_ind(sample1, sample2, equal_var=True)
-df_pooled = n1 + n2 - 2
-t_critical_pooled = stats.t.ppf(0.975, df_pooled)
+# Verify with scipy
+t_scipy, p_scipy = stats.ttest_ind(control, treatment, equal_var=True)
+print(f"\nVerification (scipy): t = {t_scipy:.3f}, p = {p_scipy:.6f}")
 
-print(f"T-statistic: {t_stat_pooled:.3f}")
-print(f"Degrees of freedom: {df_pooled}")
-print(f"P-value: {p_value_pooled:.4f}")
-print(f"Critical values (α=0.05): ±{t_critical_pooled:.3f}")
-if p_value_pooled < 0.05:
-    print("Reject H₀: Means are significantly different")
-else:
-    print("Fail to reject H₀: Insufficient evidence of difference")
-print()
+# Confidence interval for the difference
+t_crit = stats.t.ppf(1 - alpha/2, df)
+ci_lower = (mean1 - mean2) - t_crit * se_diff
+ci_upper = (mean1 - mean2) + t_crit * se_diff
 
-# 3. Welch's t-test (not assuming equal variances)
-print("=" * 50)
-print("3. WELCH'S T-TEST (not assuming σ₁=σ₂)")
-print("=" * 50)
-t_stat_welch, p_value_welch = stats.ttest_ind(sample1, sample2, equal_var=False)
-
-# Calculate Welch-Satterthwaite df
-var1, var2 = std1**2, std2**2
-df_welch = (var1/n1 + var2/n2)**2 / ((var1/n1)**2/(n1-1) + (var2/n2)**2/(n2-1))
-t_critical_welch = stats.t.ppf(0.975, df_welch)
-
-print(f"T-statistic: {t_stat_welch:.3f}")
-print(f"Degrees of freedom: {df_welch:.1f}")
-print(f"P-value: {p_value_welch:.4f}")
-print(f"Critical values (α=0.05): ±{t_critical_welch:.3f}")
-if p_value_welch < 0.05:
-    print("Reject H₀: Means are significantly different")
-else:
-    print("Fail to reject H₀: Insufficient evidence of difference")
-print()
+print(f"\n95% CI for (μ₁ - μ₂): [{ci_lower:.2f}, {ci_upper:.2f}]")
 
 # Visualization
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
-# Plot 1: Box plots
-ax = axes[0, 0]
-ax.boxplot([sample1, sample2], labels=['Sample 1', 'Sample 2'])
-ax.set_ylabel('Value')
-ax.set_title('Box Plots of Both Samples')
-ax.grid(True, alpha=0.3)
-ax.axhline(mean1, color='C0', linestyle='--', alpha=0.5, label=f'Mean1={mean1:.1f}')
-ax.axhline(mean2, color='C1', linestyle='--', alpha=0.5, label=f'Mean2={mean2:.1f}')
-ax.legend()
+# Box plots
+ax1.boxplot([control, treatment], labels=['Control', 'Treatment'])
+ax1.scatter(np.ones(n1), control, alpha=0.5, s=50, label='Control data')
+ax1.scatter(np.ones(n2)*2, treatment, alpha=0.5, s=50, label='Treatment data')
+ax1.set_ylabel('Outcome Value', fontsize=11)
+ax1.set_title('Distribution Comparison', fontsize=12)
+ax1.grid(axis='y', alpha=0.3)
+ax1.legend()
 
-# Plot 2: Histograms
-ax = axes[0, 1]
-ax.hist(sample1, bins=10, alpha=0.5, label='Sample 1', edgecolor='black')
-ax.hist(sample2, bins=10, alpha=0.5, label='Sample 2', edgecolor='black')
-ax.axvline(mean1, color='C0', linestyle='--', linewidth=2)
-ax.axvline(mean2, color='C1', linestyle='--', linewidth=2)
-ax.set_xlabel('Value')
-ax.set_ylabel('Frequency')
-ax.set_title('Histograms of Both Samples')
-ax.legend()
-ax.grid(True, alpha=0.3)
+# t-distribution with test statistic
+x = np.linspace(-4, 4, 1000)
+y = stats.t.pdf(x, df)
 
-# Plot 3: Sampling distribution of difference
-ax = axes[1, 0]
-se_diff = np.sqrt(std1**2/n1 + std2**2/n2)
-x = np.linspace(mean1-mean2-4*se_diff, mean1-mean2+4*se_diff, 200)
-y = stats.norm.pdf(x, mean1-mean2, se_diff)
-ax.plot(x, y, 'b-', linewidth=2, label='Sampling distribution')
-ax.axvline(0, color='red', linestyle='--', linewidth=2, label='H₀: μ₁-μ₂=0')
-ax.axvline(mean1-mean2, color='green', linestyle='--', linewidth=2, label=f'Observed: {mean1-mean2:.1f}')
-ax.fill_between(x[x <= mean1-mean2-1.96*se_diff], y[x <= mean1-mean2-1.96*se_diff], 
-                alpha=0.3, color='red')
-ax.fill_between(x[x >= mean1-mean2+1.96*se_diff], y[x >= mean1-mean2+1.96*se_diff], 
-                alpha=0.3, color='red', label='Rejection regions')
-ax.set_xlabel('Difference in Means')
-ax.set_ylabel('Density')
-ax.set_title('Sampling Distribution of Difference')
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-# Plot 4: P-values comparison
-ax = axes[1, 1]
-tests = ['Z-test', 'Pooled t-test', "Welch's t-test"]
-p_values = [p_value_z, p_value_pooled, p_value_welch]
-colors = ['red' if p < 0.05 else 'gray' for p in p_values]
-ax.bar(tests, p_values, color=colors, alpha=0.7, edgecolor='black')
-ax.axhline(0.05, color='red', linestyle='--', linewidth=2, label='α=0.05')
-ax.set_ylabel('P-value')
-ax.set_title('Comparison of P-values')
-ax.legend()
-ax.grid(True, alpha=0.3, axis='y')
-for i, (test, p) in enumerate(zip(tests, p_values)):
-    ax.text(i, p+0.01, f'{p:.3f}', ha='center', fontweight='bold')
+ax2.plot(x, y, 'b-', linewidth=2, label=f't-distribution (df={df})')
+ax2.fill_between(x[x <= t_stat], 0, stats.t.pdf(x[x <= t_stat], df),
+                  alpha=0.3, color='red', label='p-value region')
+ax2.fill_between(x[x >= -t_stat], 0, stats.t.pdf(x[x >= -t_stat], df),
+                  alpha=0.3, color='red')
+ax2.axvline(t_stat, color='red', linestyle='--', linewidth=2,
+            label=f't = {t_stat:.2f}')
+ax2.axvline(-t_stat, color='red', linestyle='--', linewidth=2)
+ax2.set_xlabel('t-value', fontsize=11)
+ax2.set_ylabel('Density', fontsize=11)
+ax2.set_title(f'Test Statistic (p = {p_value:.4f})', fontsize=12)
+ax2.legend()
+ax2.grid(alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('comparing_means_tests.png', dpi=150, bbox_inches='tight')
+plt.savefig('two_sample_ttest.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
-## Key Takeaways
+**Output**:
+```
+Two-Sample t-Test (Equal Variances Assumed)
+============================================================
+Control:   n=10, mean=24.90, std=1.91
+Treatment: n=10, mean=30.60, std=1.43
 
-- Use z-test when population standard deviations are known or samples are large
-- Use pooled t-test when variances are believed to be equal
-- Use Welch's t-test when variances might be different (safer default for small samples)
-- All tests have the same null hypothesis: $\mu_1 = \mu_2$
-- Rejection of null hypothesis means we have evidence that population means differ
-- Always report both the test statistic and p-value, not just "significant" or "not significant"
+H₀: μ_control = μ_treatment
+H₁: μ_control ≠ μ_treatment
+
+Pooled standard deviation: 1.697
+Standard error of difference: 0.759
+t-statistic: -7.509
+Degrees of freedom: 18
+P-value: 0.000004
+
+Decision: Reject H₀ (p = 0.0000 < 0.05)
+Conclusion: Treatment mean is significantly different from control.
+Treatment appears to increase the outcome by 5.7 units.
+
+95% CI for (μ₁ - μ₂): [-7.29, -4.11]
+```
+
+## Case 3: Unequal Variances (Welch's t-Test)
+
+### When to Use
+
+When σ₁² ≠ σ₂² (different population variances)
+
+### Test Statistic
+
+\[
+t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}
+\]
+
+### Degrees of Freedom (Welch-Satterthwaite)
+
+A complicated formula:
+
+\[
+\text{df} = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{(s_1^2/n_1)^2}{n_1-1} + \frac{(s_2^2/n_2)^2}{n_2-1}}
+\]
+
+### Python Example
+
+```python
+import numpy as np
+from scipy import stats
+
+np.random.seed(123)
+
+# Groups with different variances
+group_A = np.random.normal(100, 10, 30)  # std = 10
+group_B = np.random.normal(105, 20, 40)  # std = 20 (more variable)
+
+print("Welch's t-Test (Unequal Variances)")
+print("="*60)
+print(f"Group A: n={len(group_A)}, mean={np.mean(group_A):.2f}, std={np.std(group_A, ddof=1):.2f}")
+print(f"Group B: n={len(group_B)}, mean={np.mean(group_B):.2f}, std={np.std(group_B, ddof=1):.2f}")
+print()
+
+# Scipy automatically uses Welch's test by default
+t_stat, p_value = stats.ttest_ind(group_A, group_B, equal_var=False)
+
+print(f"t-statistic: {t_stat:.3f}")
+print(f"P-value: {p_value:.4f}")
+print()
+
+if p_value < 0.05:
+    print("Decision: Reject H₀")
+    print("Conclusion: Groups have significantly different means.")
+else:
+    print("Decision: Fail to reject H₀")
+    print("Conclusion: No significant difference detected.")
+
+# Compare with pooled t-test (wrong in this case!)
+t_pooled, p_pooled = stats.ttest_ind(group_A, group_B, equal_var=True)
+print(f"\nIf we had (incorrectly) assumed equal variances:")
+print(f"  Pooled t-test: t = {t_pooled:.3f}, p = {p_pooled:.4f}")
+print(f"  Welch's t-test: t = {t_stat:.3f}, p = {p_value:.4f}")
+print(f"\nDifference in p-values: {abs(p_pooled - p_value):.4f}")
+```
+
+## Case 4: Paired t-Test
+
+### When to Use
+
+When observations are **paired** or **matched**:
+- Before-after measurements on same subjects
+- Matched pairs (twins, siblings)
+- Two measurements on same unit
+
+### Key Idea
+
+Compute **differences** d = x₁ - x₂ for each pair, then test whether mean difference = 0.
+
+### Test Statistic
+
+\[
+t = \frac{\bar{d}}{s_d/\sqrt{n}} \sim t_{n-1}
+\]
+
+where:
+- \(\bar{d}\) = mean of differences
+- \(s_d\) = standard deviation of differences
+- n = number of pairs
+
+### Python Example
+
+```python
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+
+# Before-after weight loss study
+subjects = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+before = np.array([85, 92, 78, 88, 95, 82, 90, 87, 93, 86])
+after = np.array([82, 88, 76, 85, 91, 80, 87, 84, 90, 83])
+
+print("Paired t-Test: Weight Loss Study")
+print("="*60)
+print("Subject | Before | After | Difference")
+print("-" * 60)
+for i, subj in enumerate(subjects):
+    print(f"   {subj}    |  {before[i]:4.0f}  |  {after[i]:3.0f}  |    {before[i]-after[i]:+3.0f}")
+
+# Compute differences
+differences = before - after
+n = len(differences)
+mean_diff = np.mean(differences)
+std_diff = np.std(differences, ddof=1)
+
+print()
+print(f"Mean difference: {mean_diff:.2f} kg")
+print(f"Std of differences: {std_diff:.2f} kg")
+print()
+print(f"H₀: μ_difference = 0 (no weight change)")
+print(f"H₁: μ_difference ≠ 0 (weight changed)")
+print()
+
+# Test statistic
+se_diff = std_diff / np.sqrt(n)
+t_stat = mean_diff / se_diff
+df = n - 1
+p_value = 2 * (1 - stats.t.cdf(abs(t_stat), df))
+
+print(f"t-statistic: {t_stat:.3f}")
+print(f"Degrees of freedom: {df}")
+print(f"P-value: {p_value:.4f}")
+print()
+
+if p_value < 0.05:
+    print(f"Decision: Reject H₀ (p = {p_value:.4f} < 0.05)")
+    print(f"Conclusion: Significant weight change detected.")
+    print(f"Average loss: {mean_diff:.1f} kg")
+else:
+    print(f"Decision: Fail to reject H₀ (p = {p_value:.4f} ≥ 0.05)")
+    print(f"Conclusion: No significant weight change.")
+
+# Verify with scipy
+t_scipy, p_scipy = stats.ttest_rel(before, after)
+print(f"\nVerification (scipy): t = {t_scipy:.3f}, p = {p_scipy:.4f}")
+
+# Confidence interval
+t_crit = stats.t.ppf(0.975, df)
+ci_lower = mean_diff - t_crit * se_diff
+ci_upper = mean_diff + t_crit * se_diff
+print(f"\n95% CI for mean difference: [{ci_lower:.2f}, {ci_upper:.2f}] kg")
+
+# Visualization
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+
+# Before-after plot
+x_pos = np.arange(n)
+ax1.plot(x_pos, before, 'o-', linewidth=2, markersize=8, label='Before')
+ax1.plot(x_pos, after, 's-', linewidth=2, markersize=8, label='After')
+for i in range(n):
+    ax1.plot([i, i], [before[i], after[i]], 'k--', alpha=0.3)
+ax1.set_xticks(x_pos)
+ax1.set_xticklabels(subjects)
+ax1.set_ylabel('Weight (kg)', fontsize=11)
+ax1.set_xlabel('Subject', fontsize=11)
+ax1.set_title('Before vs. After Weights', fontsize=12)
+ax1.legend()
+ax1.grid(alpha=0.3)
+
+# Differences distribution
+ax2.hist(differences, bins=6, edgecolor='black', alpha=0.7)
+ax2.axvline(0, color='red', linestyle='--', linewidth=2, label='No change')
+ax2.axvline(mean_diff, color='green', linestyle='--', linewidth=2, 
+            label=f'Mean = {mean_diff:.1f}')
+ax2.set_xlabel('Weight Difference (Before - After) kg', fontsize=11)
+ax2.set_ylabel('Frequency', fontsize=11)
+ax2.set_title('Distribution of Differences', fontsize=12)
+ax2.legend()
+ax2.grid(alpha=0.3, axis='y')
+
+plt.tight_layout()
+plt.savefig('paired_ttest.png', dpi=150, bbox_inches='tight')
+plt.show()
+```
+
+## Choosing the Right Test
+
+### Decision Tree
+
+```
+Comparing two means?
+├─ Same subjects (paired)?
+│  └─ YES → Paired t-test
+│
+└─ NO (independent groups)
+   ├─ Variances equal?
+   │  ├─ YES → Pooled t-test
+   │  └─ NO → Welch's t-test
+   │
+   └─ Don't know → Use Welch's (safer default)
+```
+
+### Testing for Equal Variances
+
+Use **Levene's test** or **F-test** (covered in section 7.3)
+
+## Effect Size: Cohen's d
+
+### Why Effect Size Matters
+
+P-values tell us **if** there's a difference, but not **how big** it is.
+
+### Cohen's d
+
+Standardized mean difference:
+
+\[
+d = \frac{\bar{x}_1 - \bar{x}_2}{s_p}
+\]
+
+### Interpretation
+
+| |d| | Effect Size |
+|-----|-------------|
+| 0.2 | Small |
+| 0.5 | Medium |
+| 0.8 | Large |
+
+### Python Example
+
+```python
+import numpy as np
+from scipy import stats
+
+def cohens_d(group1, group2):
+    """Calculate Cohen's d effect size."""
+    n1, n2 = len(group1), len(group2)
+    var1, var2 = np.var(group1, ddof=1), np.var(group2, ddof=1)
+    
+    # Pooled standard deviation
+    pooled_std = np.sqrt(((n1-1)*var1 + (n2-1)*var2) / (n1+n2-2))
+    
+    # Cohen's d
+    d = (np.mean(group1) - np.mean(group2)) / pooled_std
+    
+    return d
+
+# Example from earlier
+control = np.array([23, 25, 22, 28, 26, 24, 27, 25, 23, 26])
+treatment = np.array([30, 32, 28, 31, 29, 33, 30, 32, 31, 30])
+
+d = cohens_d(control, treatment)
+
+print(f"Cohen's d = {d:.3f}")
+if abs(d) < 0.2:
+    effect = "negligible"
+elif abs(d) < 0.5:
+    effect = "small"
+elif abs(d) < 0.8:
+    effect = "medium"
+else:
+    effect = "large"
+    
+print(f"Effect size: {effect}")
+print(f"\nInterpretation: The treatment effect is {abs(d):.1f} standard deviations.")
+```
+
+## Summary
+
+### Test Selection Guide
+
+| Situation | Test | Function |
+|-----------|------|----------|
+| One sample, test mean | One-sample t-test | `stats.ttest_1samp()` |
+| Two independent, equal var | Pooled t-test | `stats.ttest_ind(equal_var=True)` |
+| Two independent, unequal var | Welch's t-test | `stats.ttest_ind(equal_var=False)` |
+| Two paired samples | Paired t-test | `stats.ttest_rel()` |
+
+### Key Points
+
+✅ Always check assumptions (normality, equal variance)  
+✅ Report effect sizes, not just p-values  
+✅ Use Welch's test as default for independent samples  
+✅ Paired tests are more powerful when applicable  
+✅ Visualize data before testing  
+
+### Common Mistakes
+
+❌ Using independent t-test on paired data  
+❌ Assuming equal variances without checking  
+❌ Ignoring effect size  
+❌ Over-interpreting small p-values in large samples
