@@ -11,11 +11,11 @@ Last Updated: December 6, 2025
 
 This book covers the fundamental concepts of probability and statistics needed for computer science, data science, and machine learning. It includes interactive Python code examples, visualizations, and real-world applications.
 
-**Total Content**: ~435KB of comprehensive material across 9 chapters and 32 sections
+**Total Content**: ~470KB of comprehensive material across 9 chapters and 34 sections
 
 ---
 
-## Part I: Describing Datasets
+## Part I: Describing Datasets (~50KB)
 
 ### Chapter 1: First Tools for Looking at Data
 - **1.1 Datasets** - Data types, structures, and formats
@@ -29,8 +29,6 @@ This book covers the fundamental concepts of probability and statistics needed f
 - **2.1 Plotting 2D Data** - Scatter plots, heatmaps, and paired data
 - **2.2 Correlation** - Pearson correlation, interpretation, and pitfalls
 - **2.3 You Should Know** - Important concepts for relationships
-
-**Part 1 Total**: ~50KB
 
 ---
 
@@ -134,7 +132,7 @@ This book covers the fundamental concepts of probability and statistics needed f
 
 ---
 
-## Part III: Inference (~305KB)
+## Part III: Inference (~340KB)
 
 ### Chapter 6: Samples and Populations
 - **6.1 The Sample Mean** (18KB)
@@ -176,7 +174,7 @@ This book covers the fundamental concepts of probability and statistics needed f
   - Power analysis
   - Examples (7.1-7.8)
   
-- **7.2 Comparing Means (t-Tests)** (22KB)
+- **7.2 Comparing Population Means** (22KB)
   - One-sample t-test
   - Two-sample t-test (pooled)
   - Welch's t-test (unequal variances)
@@ -191,7 +189,7 @@ This book covers the fundamental concepts of probability and statistics needed f
   - Contingency tables
   - Examples (7.16-7.21)
   
-- **7.4 P-Value Hacking and Pitfalls** (16KB)
+- **7.4 P-Value Hacking and Multiple Testing** (16KB)
   - Multiple testing problem
   - Publication bias
   - P-hacking techniques
@@ -243,6 +241,7 @@ This book covers the fundamental concepts of probability and statistics needed f
   - Bernoulli MLE (complete derivation)
   - Normal MLE (μ and σ²)
   - Poisson MLE
+  - Exponential MLE
   - Fisher information
   - Cramér-Rao bound
   - Asymptotic properties
@@ -252,10 +251,11 @@ This book covers the fundamental concepts of probability and statistics needed f
 - **9.2 Bayesian Inference** (24KB)
   - Bayes' theorem
   - Prior, likelihood, posterior
-  - Conjugate priors
+  - Conjugate priors introduction
   - Beta-Binomial conjugacy
   - Credible intervals vs. confidence intervals
   - Prior selection (informative, weakly informative, uniform)
+  - Prior sensitivity analysis
   - Posterior predictive distribution
   - Sequential updating
   - Examples (9.8-9.13)
@@ -268,10 +268,30 @@ This book covers the fundamental concepts of probability and statistics needed f
   - Hyperparameter interpretation
   - Maximum A Posteriori (MAP) estimation
   - MAP as regularized MLE
-  - Comparison of point estimates
+  - Comparison of point estimates (MLE, MAP, posterior mean)
   - Examples (9.14-9.17)
+  
+- **9.4 Bayesian Normal Inference** (21KB)
+  - Normal with unknown mean (known variance)
+  - Normal with unknown variance (known mean)
+  - Normal with both parameters unknown
+  - Normal-Gamma conjugacy
+  - Marginal posteriors (Student's t)
+  - Posterior predictive distribution
+  - Sequential updating demonstrations
+  - Examples (9.18-9.22)
+  
+- **9.5 Applications** (33KB)
+  - A/B Testing with Bayesian inference
+  - Sequential coin flip testing
+  - Quality control in manufacturing
+  - Email spam rate estimation
+  - Machine learning hyperparameter tuning
+  - Bayesian optimization
+  - Real-world case studies
+  - Examples (9.23-9.30)
 
-**Chapter 9 Total**: ~66KB (3 of 5 sections)
+**Chapter 9 Total**: ~120KB (5 sections)
 
 ---
 
@@ -297,6 +317,8 @@ This book covers the fundamental concepts of probability and statistics needed f
 - ✓ Estimate parameters using MLE
 - ✓ Apply Bayesian inference
 - ✓ Choose appropriate statistical methods
+- ✓ Implement sequential Bayesian updating
+- ✓ Apply statistical methods to real-world problems
 
 ---
 
@@ -402,21 +424,24 @@ Expanded with:
 - Modern data science applications
 - Jupyter Book formatting
 - Comprehensive visualizations
+- Bayesian inference methods
+- Real-world case studies
 
 ---
 
 ## 📊 Book Statistics
 
 - **Total Chapters**: 9
-- **Total Sections**: 32
-- **Total Content**: ~435KB
-- **Python Examples**: 200+
-- **Worked Problems**: 150+
-- **Visualizations**: 100+
-- **Real-World Applications**: 50+
+- **Total Sections**: 34
+- **Total Content**: ~470KB
+- **Python Examples**: 250+
+- **Worked Problems**: 180+
+- **Visualizations**: 150+
+- **Real-World Applications**: 60+
+- **Code Lines**: 15,000+
 
 ---
 
 **Last Updated**: December 6, 2025  
 **Version**: 2.0 (Fully Expanded Edition)  
-**Status**: ✅ Complete
+**Status**: ✅ Complete (All 9 chapters, 34 sections)
