@@ -101,7 +101,11 @@ parts:
       sections:
         - file: part3/ch09_mle
           title: "9.1 Maximum Likelihood Estimation"
+        - file: part3/ch09_bayesian
+          title: "9.2 Bayesian Inference"
+        - file: part3/ch09_conjugate
+          title: "9.3 Conjugate Priors and MAP"
         - file: part3/ch09_bayesian_normal
-          title: "9.2 Bayesian Normal Inference"
+          title: "9.4 Bayesian Normal Inference"
         - file: part3/ch09_applications
-          title: "9.3 Applications"
+          title: "9.5 Applications"
